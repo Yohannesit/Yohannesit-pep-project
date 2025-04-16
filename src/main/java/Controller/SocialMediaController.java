@@ -34,15 +34,14 @@ public class SocialMediaController {
         Javalin app = Javalin.create();
 
         //app.get("example-endpoint", this::exampleHandler);
-
         app.post("/register", this::registerHandler);
         app.post("/login", this::loginHandler);
         app.post("/messages", this::createMessageHandler);
         app.get("/messages", this::getAllMessagesHandler);
-        app.get("/messages/:message_id", this::getMessageByIdHandler);
-        app.delete("/messages/:message_id", this::deleteMessageHandler);
-        app.patch("/messages/:message_id", this::updateMessageHandler);
-        app.get("/accounts/:account_id/messages", this::getMessagesByAccountHandler);
+        app.get("/messages/{message_id}", this::getMessageByIdHandler); 
+        app.delete("/messages/{message_id}", this::deleteMessageHandler);
+        app.patch("/messages/{message_id}", this::updateMessageHandler);
+        app.get("/accounts/{account_id}/messages", this::getMessagesByAccountHandler);
         app.start(8080);
 
         return app;
@@ -99,7 +98,7 @@ public class SocialMediaController {
         Message message = messageService.getMessageById(messageId);
         if (message!=null) {
             ctx.json(message);
-        }
+        } 
     }
 
     private void deleteMessageHandler(Context ctx) {
