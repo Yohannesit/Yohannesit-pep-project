@@ -22,6 +22,7 @@ public class SocialMediaController {
      * suite must receive a Javalin object from this method.
      * @return a Javalin app object which defines the behavior of the Javalin controller.
      */
+
     AccountService accountService;
     MessageService messageService;
 
@@ -42,7 +43,6 @@ public class SocialMediaController {
         app.delete("/messages/{message_id}", this::deleteMessageHandler);
         app.patch("/messages/{message_id}", this::updateMessageHandler);
         app.get("/accounts/{account_id}/messages", this::getMessagesByAccountHandler);
-        app.start(8080);
 
         return app;
     }
@@ -98,7 +98,9 @@ public class SocialMediaController {
         Message message = messageService.getMessageById(messageId);
         if (message!=null) {
             ctx.json(message);
-        } 
+        } else {
+            ctx.status(200);
+        }
     }
 
     private void deleteMessageHandler(Context ctx) {
@@ -106,6 +108,8 @@ public class SocialMediaController {
         Message deletedMessage = messageService.deleteMessage(messageId);
         if (deletedMessage!= null) {
             ctx.json(deletedMessage);
+        } else {
+            ctx.status(200);
         }
     }
 
